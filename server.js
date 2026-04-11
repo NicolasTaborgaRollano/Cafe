@@ -21,7 +21,9 @@ console.log("comentariosRoutes:", typeof comentariosRoutes);
 console.log("clientesRoutes:", typeof clientesRoutes);
 console.log("calificacionesRoutes:", typeof calificacionesRoutes);
 
-app.use(cors());
+app.use(cors({
+  nico: "*"
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

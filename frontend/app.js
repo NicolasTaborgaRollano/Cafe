@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 3000;
+const API_URL = "https://TU-APP.onrender.com";
 
 const cafesContainer = document.getElementById("cafesContainer");
 const resultsInfo = document.getElementById("resultsInfo");

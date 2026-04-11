@@ -1,18 +1,19 @@
 const mysql = require("mysql2");
 
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "mainline.proxy.rlwy.net",
   user: "root",
-  password: "",
-  database: "cafes_db"
+  password: "GbkpNUwkfIgdmhDhYIaFGteoHkkBealy",
+  database: "railway",
+  port: 25325
 });
 
 db.connect((err) => {
   if (err) {
-    console.error("Error conectando a MySQL:", err);
-    return;
+    console.error("❌ Error conectando a DB:", err);
+  } else {
+    console.log("🔥 Conectado a Railway MySQL");
   }
-  console.log("🔥 Conectado a MySQL");
 });
 
 module.exports = db;
