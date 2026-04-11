@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafe | Cafés</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo-box">
+        <div class="logo">☕</div>
+        <div>
+          <h1>Cafe</h1>
+          <p>Descubre y reseña cafés</p>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <h3>Tu app de cafés</h3>
+        <p>
+          Busca cafés, agrégalos a la base y deja comentarios y calificaciones
+          como si fuera una versión de Vivino para café.
+        </p>
+      </div>
+
+      <div class="sidebar-card light">
+        <h4>Funciones</h4>
+        <ul>
+          <li>Buscar cafés</li>
+          <li>Insertar cafés</li>
+          <li>Ver detalles</li>
+          <li>Reseñar cafés</li>
+          <li>Calificar cafés</li>
+          <li>Iniciar sesión y registrarse</li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h2>Explora cafés increíbles</h2>
+          <p></p>
+        </div>
+
+        <div class="topbar-right">
+          <div class="auth-actions" id="authActions">
+            <button id="openLoginBtn" class="secondary-btn">Iniciar sesión</button>
+            <button id="openRegisterBtn" class="primary-btn">Registrarse</button>
+          </div>
+
+          <div class="user-box hidden" id="userBox">
+            <span id="userWelcome"></span>
+            <button id="logoutBtn" class="danger-btn">Cerrar sesión</button>
+          </div>
+
+          <div class="search-box">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Buscar por nombre o descripción..."
+            />
+            <button id="searchBtn">Buscar</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="form-section">
+        <div class="section-header">
+          <h3>Agregar nuevo café</h3>
+          <span>Insertar en base de datos</span>
+        </div>
+
+        <form id="cafeForm" class="cafe-form">
+          <input type="text" id="nombre" placeholder="Nombre del café" required />
+          <input type="text" id="descripcion" placeholder="Descripción" required />
+          <input type="number" id="precio" step="0.01" placeholder="Precio" required />
+          <input type="file" id="imagen" accept="image/*" required />
+          <button type="submit">Agregar café</button>
+        </form>
+      </section>
+
+      <section class="catalog-section">
+        <div class="section-header">
+          <h3>Catálogo de cafés</h3>
+          <span id="resultsInfo">Cargando cafés...</span>
+        </div>
+
+        <div id="cafesContainer" class="cafes-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal detalle café -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <button id="closeModal" class="close-btn">&times;</button>
+
+      <div id="modalBody"></div>
+
+      <div class="rating-box">
+        <h3>Calificar este café</h3>
+        <div id="ratingStars" class="rating-stars"></div>
+        <p id="ratingMessage" class="rating-message"></p>
+      </div>
+
+      <div class="review-box">
+        <h3>Agregar comentario</h3>
+        <form id="comentarioForm">
+          <textarea
+            id="comentarioTexto"
+            placeholder="Escribe tu comentario sobre este café..."
+            required
+          ></textarea>
+          <button type="submit">Publicar comentario</button>
+        </form>
+      </div>
+
+      <div class="comments-box">
+        <h3>Comentarios</h3>
+        <div id="comentariosContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="catalog-section">
+  <div class="section-header">
+    <h3>🔥 Top cafés</h3>
+  </div>
+  <div id="topCafes" class="cafes-grid"></div>
+</section>
+  <!-- Modal Login -->
+  <div id="loginModal" class="modal hidden">
+    <div class="auth-modal-content">
+      <button id="closeLoginModal" class="close-btn">&times;</button>
+      <h2>Iniciar sesión</h2>
+      <form id="loginForm" class="auth-form">
+        <input type="email" id="loginEmail" placeholder="Correo electrónico" required />
+        <input type="password" id="loginPassword" placeholder="Contraseña" required />
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Registro -->
+  <div id="registerModal" class="modal hidden">
+    <div class="auth-modal-content">
+      <button id="closeRegisterModal" class="close-btn">&times;</button>
+      <h2>Registrarse</h2>
+      <form id="registerForm" class="auth-form">
+        <input type="text" id="registerNombre" placeholder="Nombre completo" required />
+        <input type="email" id="registerEmail" placeholder="Correo electrónico" required />
+        <input type="password" id="registerPassword" placeholder="Contraseña" required />
+        <button type="submit">Crear cuenta</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
