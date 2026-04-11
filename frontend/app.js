@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:3000";
+const PORT = process.env.PORT || 3000;
 
 const cafesContainer = document.getElementById("cafesContainer");
 const resultsInfo = document.getElementById("resultsInfo");
