@@ -106,8 +106,7 @@ router.post("/", (req, res) => {
       });
     }
 
-    const imagen = `http://localhost:3000/uploads/${req.file.filename}`;
-
+    const image = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
     const sql = `
       INSERT INTO cafes (nombre, descripcion, precio, imagen, rating, creado)
       VALUES (?, ?, ?, ?, 0, NOW())
