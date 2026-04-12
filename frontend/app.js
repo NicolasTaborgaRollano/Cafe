@@ -1,4 +1,4 @@
-const API_URL = "https://TU-APP.onrender.com";
+const API_URL = "https://cafe-uthx.onrender.com";
 
 const cafesContainer = document.getElementById("cafesContainer");
 const resultsInfo = document.getElementById("resultsInfo");

@@ -13,7 +13,7 @@ db.connect((err) => {
     console.error("❌ Error conectando a DB:", err);
   } else {
     console.log("🔥 Conectado a Railway MySQL");
-  }
+  }D
 });
 
 module.exports = db;
