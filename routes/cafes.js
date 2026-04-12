@@ -4,6 +4,7 @@ const db = require("../db");
 const multer = require("multer");
 const path = require("path");
 
+// 📁 Configuración de almacenamiento
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "../uploads"));
@@ -27,7 +28,7 @@ const upload = multer({
   }
 });
 
-// Obtener todos los cafés
+// 🟢 Obtener todos los cafés
 router.get("/", (req, res) => {
   const sql = "SELECT * FROM cafes ORDER BY creado DESC";
 
@@ -41,7 +42,7 @@ router.get("/", (req, res) => {
   });
 });
 
-// Buscar cafés por nombre o descripción
+// 🔍 Buscar cafés
 router.get("/search/:texto", (req, res) => {
   const texto = `%${req.params.texto}%`;
 
@@ -62,7 +63,7 @@ router.get("/search/:texto", (req, res) => {
   });
 });
 
-// Obtener un café por ID
+// 🔎 Obtener por ID
 router.get("/:id", (req, res) => {
   const { id } = req.params;
 
@@ -82,55 +83,48 @@ router.get("/:id", (req, res) => {
   });
 });
 
-// Insertar un nuevo café con imagen subida
-router.post("/", (req, res) => {
-  upload.single("imagen")(req, res, (uploadErr) => {
-    if (uploadErr) {
-      console.error("Error subiendo imagen:", uploadErr);
-      return res.status(400).json({
-        error: uploadErr.message || "Error al subir la imagen"
+// 🚀 INSERTAR CAFÉ (CORREGIDO)
+router.post("/", upload.single("imagen"), (req, res) => {
+  const { nombre, descripcion, precio } = req.body;
+
+  if (!nombre || !descripcion || precio == null || precio === "") {
+    return res.status(400).json({
+      error: "Faltan datos. Se requiere nombre, descripcion y precio"
+    });
+  }
+
+  if (!req.file) {
+    return res.status(400).json({
+      error: "Imagen requerida"
+    });
+  }
+
+  // 🔥 CORRECTO
+  const imagen = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+
+  const sql = `
+    INSERT INTO cafes (nombre, descripcion, precio, imagen, rating, creado)
+    VALUES (?, ?, ?, ?, 0, NOW())
+  `;
+
+  db.query(sql, [nombre, descripcion, precio, imagen], (err, result) => {
+    if (err) {
+      console.error("Error insertando café:", err);
+      return res.status(500).json({
+        error: "Error al insertar café",
+        detalle: err.message
       });
     }
 
-    const { nombre, descripcion, precio } = req.body;
-
-    if (!nombre || !descripcion || precio == null || precio === "") {
-      return res.status(400).json({
-        error: "Faltan datos. Se requiere nombre, descripcion y precio"
-      });
-    }
-
-    if (!req.file) {
-      return res.status(400).json({
-        error: "Imagen requerida"
-      });
-    }
-
-    const image = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
-    const sql = `
-      INSERT INTO cafes (nombre, descripcion, precio, imagen, rating, creado)
-      VALUES (?, ?, ?, ?, 0, NOW())
-    `;
-
-    db.query(sql, [nombre, descripcion, precio, imagen], (err, result) => {
-      if (err) {
-        console.error("Error insertando café:", err);
-        return res.status(500).json({
-          error: "Error al insertar café",
-          detalle: err.message
-        });
-      }
-
-      return res.status(201).json({
-        message: "Café creado correctamente",
-        id: result.insertId,
-        imagen
-      });
+    return res.status(201).json({
+      message: "Café creado correctamente",
+      id: result.insertId,
+      imagen
     });
   });
 });
 
-// Actualizar un café
+// ✏️ Actualizar café
 router.put("/:id", (req, res) => {
   const { id } = req.params;
   const { nombre, descripcion, precio, imagen, rating } = req.body;
@@ -159,7 +153,7 @@ router.put("/:id", (req, res) => {
   );
 });
 
-// Eliminar un café
+// 🗑 Eliminar café
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
