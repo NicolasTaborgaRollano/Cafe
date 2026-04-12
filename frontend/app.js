@@ -214,8 +214,7 @@ function renderizarCafes(cafes) {
     .map(
       (cafe) => `
         <div class="cafe-card">
-          <img src="${cafe.imagen}" alt="${cafe.nombre}" />
-          <div class="cafe-card-body">
+          <img src="${API_URL}${cafe.imagen}" alt="${cafe.nombre}" />           <div class="cafe-card-body">
             <h4>${cafe.nombre}</h4>
             <p>${cafe.descripcion}</p>
             <div class="price-rating">
